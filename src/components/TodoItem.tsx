@@ -30,7 +30,6 @@ export const TodoItem = (props: { todo: Todo }) => {
   const handleEdit = (todoId: string, todoText: string) => {
     setEditingTodoId(todoId);
     setEditingTodoText(todoText);
-
     if (editInputRef.current) {
       editInputRef.current.focus();
     }
@@ -41,7 +40,6 @@ export const TodoItem = (props: { todo: Todo }) => {
       editTodo(todoId, editingTodoText);
       setEditingTodoId(null);
       setEditingTodoText('');
-      toast.success('Todo updated successfully!');
     } else {
       toast.error('Todo Field cannot be empty!');
     }
@@ -49,20 +47,18 @@ export const TodoItem = (props: { todo: Todo }) => {
 
   const handleDelete = (todoId: string) => {
     deleteTodo(todoId);
-    toast.success('Todo deleted successfully!');
   }
 
   const handleStatusUpdate = (todoId: string) => {
-    updateTodoStatus(todoId);
-    toast.success('Todo status updated successfully!');
-  }
+    updateTodoStatus(todoId, todo.completed);
+}
 
   return (
     <motion.li whileHover={{ scale: 1.02 }}
       layout
       className={cn(
         'p-5 rounded-xl bg-zinc-900',
-        todo.status === 'completed' && 'bg-opacity-50 text-zinc-500',
+        todo.completed && 'bg-opacity-50 text-zinc-500',
       )}
     >
       {editingTodoId === todo.id ? (
@@ -85,14 +81,14 @@ export const TodoItem = (props: { todo: Todo }) => {
           <motion.span
             layout
             style={{
-              textDecoration: todo.status === 'completed' ? 'line-through' : 'none',
+              textDecoration: todo.completed ? 'line-through' : 'none',
             }}
           >
             {todo.text}
           </motion.span>
           <div className="flex justify-between gap-5 text-white">
             <button onClick={() => handleStatusUpdate(todo.id)}>
-              {todo.status === 'undone' ? (
+              {todo.completed === false ? (
                 <span className="flex items-center gap-1">
                   <BsCheck2Square />
                   Mark Completed

@@ -2,8 +2,13 @@ import { useEffect, useState, useRef } from "react"
 import { Input } from "./Input";
 import { useTodo } from "../context";
 import toast from "react-hot-toast";
+import type { User } from "firebase/auth";
 
-export const AddTodo = () => {
+interface AddTodoProps {
+  user: User
+}
+
+export const AddTodo = ({ user }: AddTodoProps) => {
   const [input, setInput] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
   const { addTodo } = useTodo();
@@ -17,9 +22,8 @@ export const AddTodo = () => {
   const handleSubmission = (e: React.SubmitEvent) => {
     e.preventDefault();
     if (input.trim() !== '') {
-      addTodo(input);
+      addTodo(input, user.uid);
       setInput('');
-      toast.success('Todo added successfully!');
     } else {
       toast.error('Todo field cannot be empty!');
     }
@@ -37,7 +41,7 @@ export const AddTodo = () => {
         />
         <button
           type="submit"
-          className="px-5 py-2 text-sm font-normal text-blue-300 bg-blue-900 border-2 border-blue-900 active:scale-95 rounded-xl"
+          className="px-5 py-2 text-sm font-normal text-blue-300 bg-blue-900 border-2 border-blue-900 active:scale-95 rounded-xl cursor-pointer"
         >
           Submit
         </button>
@@ -45,4 +49,3 @@ export const AddTodo = () => {
     </form>
   );
 }
-

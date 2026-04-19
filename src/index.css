@@ -1,2 +1,7 @@
 @import "tailwindcss";
 
+@layer components {
+    .btn {
+        @apply px-5 py-2 text-sm font-normal text-blue-300 bg-blue-900 border-2 border-blue-900 hover:scale-105 active:scale-95 rounded-xl cursor-pointer;
+    }
+}
