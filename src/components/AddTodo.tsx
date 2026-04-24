@@ -3,6 +3,8 @@ import { Input } from "./Input";
 import { useTodo } from "../context";
 import toast from "react-hot-toast";
 import type { User } from "firebase/auth";
+import { motion } from "framer-motion";
+import AnimatedButton from "./AnimatedButton";
 
 interface AddTodoProps {
   user: User
@@ -31,21 +33,23 @@ export const AddTodo = ({ user }: AddTodoProps) => {
 
   return (
     <form onSubmit={handleSubmission}>
-      <div className="flex items-center w-full max-w-lg gap-2 p-5 m-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1 }}
+        className="flex items-center w-full max-w-lg gap-2 p-5 m-auto"
+      >
         <Input
           ref={inputRef}
           type="text"
-          placeholder="start typing ..."
+          placeholder="enter a new todo"
           value={input}
           onChange={e => setInput(e.target.value)}
         />
-        <button
-          type="submit"
-          className="px-5 py-2 text-sm font-normal text-blue-300 bg-blue-900 border-2 border-blue-900 active:scale-95 rounded-xl cursor-pointer"
-        >
+        <AnimatedButton>
           Submit
-        </button>
-      </div>
+        </AnimatedButton>
+      </motion.div>
     </form>
   );
 }

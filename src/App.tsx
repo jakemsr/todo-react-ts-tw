@@ -1,16 +1,16 @@
 import toast, { Toaster } from "react-hot-toast"
-import { AddTodo, TodoList } from "./components"
-import Login from "./components/Login"
+import { AddTodo, TodoList, Login } from "./components"
 import { useEffect, useState } from "react"
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from "firebase/auth"
 import { auth } from "./firebase"
 import { useTodo } from "./context"
+import { motion, AnimatePresence } from "framer-motion"
 
 function App() {
 
   const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(true);
-  const { getTodos } = useTodo();
+  const { todos, getTodos } = useTodo();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -20,6 +20,7 @@ function App() {
         getTodos(user.uid);
       } else {
         setUser(undefined);
+        todos.length = 0;
       }
     });
   }, []);
@@ -27,8 +28,7 @@ function App() {
   function register(email: string, password: string) {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in 
-        console.log(userCredential.user);
+        // also signed in 
         setUser(userCredential.user);
         toast.success('User successfully registered!');
       })
@@ -43,7 +43,6 @@ function App() {
   function login(email: string, password: string) {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in ;
         setUser(userCredential.user);
         toast.success('Successfully logged in!');
       })
@@ -56,9 +55,9 @@ function App() {
   }
 
   function logout() {
-    console.log('logout');
     signOut(auth).then(() => {
       setUser(undefined);
+      todos.length = 0;
       toast.success('Successfully logged out!');
     }).catch((error) => {
       const errorCode = error.code;
@@ -72,11 +71,14 @@ function App() {
     <div className="bg-blue-200 h-screen">
       <Toaster position="bottom-center" />
       <Login user={user} register={register} login={login} logout={logout} loading={loading} />
-      {user !== undefined && (
-        <>
-          <AddTodo user={user} />
-          <TodoList />
-        </>)}
+      <AnimatePresence mode="wait">
+        {user !== undefined && (
+          <motion.div key="no-user" exit={{ opacity: 0, transition: { duration: 0.8 } }}>
+            <AddTodo user={user} />
+            <TodoList />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
