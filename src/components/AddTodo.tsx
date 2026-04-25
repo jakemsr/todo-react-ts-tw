@@ -1,19 +1,16 @@
 import { useEffect, useState, useRef } from "react"
 import { Input } from "./Input";
+import { useUser } from "../context";
 import { useTodo } from "../context";
 import toast from "react-hot-toast";
-import type { User } from "firebase/auth";
 import { motion } from "framer-motion";
 import AnimatedButton from "./AnimatedButton";
 
-interface AddTodoProps {
-  user: User
-}
-
-export const AddTodo = ({ user }: AddTodoProps) => {
+export const AddTodo = () => {
   const [input, setInput] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
   const { addTodo } = useTodo();
+  const { user } = useUser();
 
   useEffect(() => {
     if (inputRef.current) {
@@ -23,11 +20,15 @@ export const AddTodo = ({ user }: AddTodoProps) => {
 
   const handleSubmission = (e: React.SubmitEvent) => {
     e.preventDefault();
-    if (input.trim() !== '') {
-      addTodo(input, user.uid);
-      setInput('');
+    if (user === undefined) {
+      console.error("User is undefined. This should not happen!");
     } else {
-      toast.error('Todo field cannot be empty!');
+      if (input.trim() !== '') {
+        addTodo(input, user.uid);
+        setInput('');
+      } else {
+        toast.error('Todo field cannot be empty!');
+      }
     }
   }
 

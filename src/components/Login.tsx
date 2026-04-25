@@ -1,20 +1,20 @@
-import type { User } from "firebase/auth"
+import { useUser } from "../context";
 import { useState } from "react"
 import { AnimatePresence, easeInOut, motion } from 'framer-motion'
 import AnimatedButton from "./AnimatedButton"
 
-interface LoginProps {
-  user: User | undefined
-  register: (email: string, password: string) => void
-  login: (email: string, password: string) => void
-  logout: () => void
-  loading: boolean
-}
-
-export const Login = ({ user, register, login, logout, loading }: LoginProps) => {
+export const Login = () => {
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { user, register, login, logout, loading } = useUser();
+
+  // be sure to clear the use and password fields on logout
+  function doLogout() {
+    logout();
+    setEmail("");
+    setPassword("");
+  }
 
   return (
     <div className="flex items-center">
@@ -30,7 +30,7 @@ export const Login = ({ user, register, login, logout, loading }: LoginProps) =>
           >
             Welcome {user.email}!
             <AnimatedButton
-              onClick={logout}
+              onClick={doLogout}
             >
               Logout
             </AnimatedButton>
