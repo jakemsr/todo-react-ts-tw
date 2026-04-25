@@ -9,7 +9,7 @@ export const Login = () => {
   const [password, setPassword] = useState<string>("");
   const { user, register, login, logout, loading } = useUser();
 
-  // be sure to clear the use and password fields on logout
+  // be sure to clear the email and password fields on logout
   function doLogout() {
     logout();
     setEmail("");
