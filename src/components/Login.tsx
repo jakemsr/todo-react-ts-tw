@@ -22,8 +22,8 @@ export const Login = () => {
         {user !== undefined ? (
           <motion.div
             key="logged-in"
-            initial={{ opacity:0, y: -20}}
-            animate={{ opacity: 1, y: 0}}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
             className="flex items-center gap-10 m-auto pt-5 text-lg font-semibold"
@@ -37,7 +37,19 @@ export const Login = () => {
           </motion.div>
         ) : (
           loading ? (
-            <button>X</button>
+            <div className="flex justify-center w-full mt-20">
+              <motion.div
+                key="loading"
+                className="w-12 h-12 rounded-full border-t-4 border-t-(-hue-1) border-solid border(--divider)"
+                animate={{ transform: "rotate(360deg)" }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              >
+              </motion.div>
+            </div>
           ) : (
             <motion.div
               key="logged-out"
