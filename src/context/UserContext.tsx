@@ -10,7 +10,7 @@ interface UserContextProps {
   register: (email: string, password: string) => void;
   login: (email: string, password: string) => void;
   logout: () => void;
-  loading: boolean;
+  loadingUser: boolean;
 }
 
 export const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -19,11 +19,11 @@ export const UserProvider = (props: { children: React.ReactNode }) => {
 
   const [user, setUser] = useState<User>();
   const { todos, getTodos } = useTodo();
-  const [loading, setLoading] = useState(true);
+  const [loadingUser, setLoadingUser] = useState(true);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      setLoading(false);
+      setLoadingUser(false);
       if (user) {
         setUser(user);
         getTodos(user.uid);
@@ -81,7 +81,7 @@ export const UserProvider = (props: { children: React.ReactNode }) => {
     register,
     login,
     logout,
-    loading
+    loadingUser
   };
 
   return (

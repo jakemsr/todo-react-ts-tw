@@ -10,6 +10,7 @@ interface TodoContextProps {
   deleteTodo: (id: string) => void;
   editTodo: (id: string, text: string) => void;
   updateTodoStatus: (id: string, completed: boolean) => void;
+  loadingTodos: boolean;
 }
 
 export interface Todo {
@@ -30,6 +31,7 @@ export const TodoContext = createContext<TodoContextProps | undefined>(undefined
 export const TodoProvider = (props: { children: React.ReactNode }) => {
 
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [loadingTodos, setLoadingTodos] = useState(false);
 
   // add new todo
   const addTodo = (text: string, uid: string) => {
@@ -102,6 +104,7 @@ export const TodoProvider = (props: { children: React.ReactNode }) => {
 
   // get todos
   async function getTodos(uid: string) {
+    setLoadingTodos(true);
     const postCollectionRef = await query(
       collection(db, "todos"),
       where("uid", "==", uid)
@@ -109,6 +112,7 @@ export const TodoProvider = (props: { children: React.ReactNode }) => {
     const { docs } = await getDocs(postCollectionRef);
     const todos: Todo[] = docs.map(doc => ({ id: doc.id, text: doc.data()['text'], completed: doc.data()['completed'], uid: doc.data()['uid'] }));
     setTodos(todos);
+    setLoadingTodos(false);
   }
 
   const value: TodoContextProps = {
@@ -117,7 +121,8 @@ export const TodoProvider = (props: { children: React.ReactNode }) => {
     addTodo,
     deleteTodo,
     editTodo,
-    updateTodoStatus
+    updateTodoStatus,
+    loadingTodos
   };
 
   return (

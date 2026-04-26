@@ -2,6 +2,7 @@ import { useTodo } from '../context';
 import { SiStarship } from 'react-icons/si';
 import { TodoItem } from './TodoItem';
 import { AnimatePresence, motion } from 'framer-motion';
+import LoadingSpinner from './LoadingSpinner';
 
 
 const container = {
@@ -10,11 +11,19 @@ const container = {
 }
 
 export const TodoList = () => {
-  const { todos } = useTodo();
+  const { todos, loadingTodos } = useTodo();
 
   return (
     <AnimatePresence mode="wait">
-      {todos.length === 0 ? (
+      {loadingTodos ? (
+        <motion.div
+          className="flex justify-center w-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: {delay: 0.5}}}
+        >
+          <LoadingSpinner key="loadingTodos" />
+        </motion.div>
+      ) : todos.length === 0 ? (
         <motion.div
           key="nothing"
           initial={{ opacity: 0, y: 20 }}
@@ -32,16 +41,17 @@ export const TodoList = () => {
           variants={container}
           initial="hidden"
           animate="visible"
-          exit={{ opacity: 0, transition: {duration: 0.8} }}
+          exit={{ opacity: 0, transition: { duration: 0.8 } }}
           className="grid max-w-lg gap-2 px-5 m-auto text-white/90"
         >
           <AnimatePresence>
-          {todos.map((todo, index) => (
-            <TodoItem todo={todo} key={index} />
-          ))}
+            {todos.map((todo, index) => (
+              <TodoItem todo={todo} key={index} />
+            ))}
           </AnimatePresence>
         </motion.ul>
-      )}
+      )
+      }
     </AnimatePresence>
   );
 }

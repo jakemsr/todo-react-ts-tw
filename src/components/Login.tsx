@@ -2,12 +2,13 @@ import { useUser } from "../context";
 import { useState } from "react"
 import { AnimatePresence, easeInOut, motion } from 'framer-motion'
 import AnimatedButton from "./AnimatedButton"
+import LoadingSpinner from "./LoadingSpinner";
 
 export const Login = () => {
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { user, register, login, logout, loading } = useUser();
+  const { user, register, login, logout, loadingUser } = useUser();
 
   // be sure to clear the email and password fields on logout
   function doLogout() {
@@ -36,19 +37,9 @@ export const Login = () => {
             </AnimatedButton>
           </motion.div>
         ) : (
-          loading ? (
+          loadingUser ? (
             <div className="flex justify-center w-full mt-20">
-              <motion.div
-                key="loading"
-                className="w-12 h-12 rounded-full border-t-4 border-t-(-hue-1) border-solid border(--divider)"
-                animate={{ transform: "rotate(360deg)" }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              >
-              </motion.div>
+              <LoadingSpinner key="loadingUser" />
             </div>
           ) : (
             <motion.div
