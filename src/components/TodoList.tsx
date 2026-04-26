@@ -19,7 +19,7 @@ export const TodoList = () => {
         <motion.div
           className="flex justify-center w-full"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: {delay: 0.5}}}
+          animate={{ opacity: 1, transition: {duration: 0.5, delay: 0.5}}}
         >
           <LoadingSpinner key="loadingTodos" />
         </motion.div>
