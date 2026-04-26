@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
-import { db } from '../firebase';
 import toast from 'react-hot-toast';
+import { db } from '../firebase';
 
 interface TodoContextProps {
   todos: Todo[];

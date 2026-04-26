@@ -1,8 +1,7 @@
-import { useUser } from "../context";
 import { useState } from "react"
 import { AnimatePresence, easeInOut, motion } from 'framer-motion'
-import AnimatedButton from "./AnimatedButton"
-import LoadingSpinner from "./LoadingSpinner";
+import { useUser } from "../context";
+import { AnimatedButton, LoadingSpinner } from "./"
 
 export const Login = () => {
 

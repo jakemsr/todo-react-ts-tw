@@ -4,7 +4,7 @@ interface LoadingSpinnerProps {
   key: string;
 }
 
-const LoadingSpinner = ({ key }: LoadingSpinnerProps) => {
+export const LoadingSpinner = ({ key }: LoadingSpinnerProps) => {
   return (
     <motion.div
       key={key}
@@ -19,5 +19,3 @@ const LoadingSpinner = ({ key }: LoadingSpinnerProps) => {
     </motion.div>
   )
 }
-
-export default LoadingSpinner

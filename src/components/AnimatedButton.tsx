@@ -5,7 +5,7 @@ interface AnimatedButtonProps {
   onClick?: React.MouseEventHandler
 }
 
-const AnimatedButton = ({ children, onClick }: AnimatedButtonProps) => {
+export const AnimatedButton = ({ children, onClick }: AnimatedButtonProps) => {
   return (
     <motion.button
       onClick={onClick}
@@ -18,6 +18,3 @@ const AnimatedButton = ({ children, onClick }: AnimatedButtonProps) => {
     </motion.button>
   )
 }
-
-export default AnimatedButton
-

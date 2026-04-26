@@ -1,14 +1,14 @@
-import cn from 'classnames'
-import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from "react";
-import type { Todo } from "../context"
-import { useTodo } from "../context";
-import toast from "react-hot-toast";
-import { Input } from "./Input";
 import { BsCheck2Square } from "react-icons/bs";
 import { TbRefresh } from "react-icons/tb";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin7Line } from "react-icons/ri";
+import cn from 'classnames'
+import toast from "react-hot-toast";
+import { AnimatePresence, motion } from 'framer-motion'
+import type { Todo } from "../context"
+import { useTodo } from "../context";
+import { Input } from "./";
 
 
 const item = {

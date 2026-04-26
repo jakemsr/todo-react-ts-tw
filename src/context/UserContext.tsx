@@ -1,7 +1,7 @@
-import type { User } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import { toast } from "react-hot-toast"
+import type { User } from "firebase/auth";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { toast } from "react-hot-toast"
 import { auth } from "../firebase"
 import { useTodo } from "./"
 

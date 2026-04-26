@@ -1,10 +1,8 @@
 import { useEffect, useState, useRef } from "react"
-import { Input } from "./Input";
-import { useUser } from "../context";
-import { useTodo } from "../context";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
-import AnimatedButton from "./AnimatedButton";
+import { AnimatedButton, Input } from "./";
+import { useUser, useTodo } from "../context";
 
 export const AddTodo = () => {
   const [input, setInput] = useState<string>("");

@@ -1,7 +1,7 @@
-import { AddTodo, TodoList, Login } from "./components"
-import { useUser } from "./context"
 import { motion, AnimatePresence } from "framer-motion"
 import { Toaster } from 'react-hot-toast'
+import { AddTodo, TodoList, Login } from "./components"
+import { useUser } from "./context"
 
 function App() {
 

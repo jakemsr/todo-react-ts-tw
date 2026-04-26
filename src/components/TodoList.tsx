@@ -1,8 +1,7 @@
-import { useTodo } from '../context';
 import { SiStarship } from 'react-icons/si';
-import { TodoItem } from './TodoItem';
 import { AnimatePresence, motion } from 'framer-motion';
-import LoadingSpinner from './LoadingSpinner';
+import { useTodo } from '../context';
+import { LoadingSpinner, TodoItem } from './';
 
 
 const container = {
